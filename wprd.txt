@@ -1,0 +1,186 @@
+FINAL YEAR PROJECT REPORT
+
+TITLE: REAL-TIME EMOTION DETECTION AND SUPPORTIVE QUOTE GENERATION SYSTEM
+CLASSIFICATION FRAMEWORK: EKMAN'S UNIVERSAL EMOTIONS
+
+-------------------------------------------------------------------------------
+1. ABSTRACT
+-------------------------------------------------------------------------------
+Emotion detection systems have evolved significantly to support emotional awareness, yet many rely on static inputs and fail to provide proactive engagement. This research addresses these limitations by developing "EmotionSense," a Real-time Emotion Detection and Empathetic Quote Generator System developed using Python and the Flask framework. Leveraging Computer Vision and a ResNet-18 Convolutional Neural Network (CNN) architecture, the system classifies live webcam feeds into Ekman’s seven universal emotions. To enhance user agency, a quote-mapping logic provides tailored affirmations alongside an interactive support module for personalized interaction. Trained on the Balanced FER-2013 dataset, the model achieves a classification accuracy of 79.81% with an average backend latency of 273 ms. By bridging the gap between automated detection and human-centric feedback, the system contributes a proactive, privacy-focused tool for improving human-computer interaction in mental health contexts.
+
+Keywords: Affective Computing, Deep Learning, ResNet-18, Facial Expression Recognition, Real-time Systems, Empathetic AI.
+
+
+-------------------------------------------------------------------------------
+2. INTRODUCTION
+-------------------------------------------------------------------------------
+Facial Expression Recognition (FER) is a critical component of affective computing (Picard, 1997). The goal of this project is to bridge the gap between AI perception and user support by providing psychological affirmations based on detected emotional states. 
+
+2.1 Problem Statement
+Despite advancements in Affective Computing, existing systems suffer from two primary limitations. First, a heavy reliance on static or pre-recorded data prevents these systems from responding to a user's emotional state in real-time. Second, most commercial tools are purely analytical; they detect emotions but fail to provide empathetic or supportive feedback, leaving a gap between emotion recognition and emotional assistance. This project addresses these gaps by developing a real-time, responsive system that provides synchronized emotional affirmations.
+
+2.1 Conceptual Review
+The concept of real-time emotion detection is grounded in the field of Affective Computing, which involves systems capable of recognizing, interpreting, and responding to human emotions (Picard, 1997). Facial expressions are considered one of the most reliable non-verbal indicators of human emotion (Awasthi & Mandal, 2015). Paul Ekman’s Extended Basic Emotion Model (1992) serves as the theoretical framework, categorizing emotions into seven universal types: happiness, sadness, fear, anger, disgust, surprise, and neutral. These categories form the basis for emotion classification in the system. A Convolutional Neural Network (CNN), specifically the ResNet-18 architecture, is subsequently trained on the Balanced FER-2013 dataset to detect these emotions, as the dataset includes thousands of labeled images corresponding to these classifications.
+
+2.1.6 Web-Based Integration Frameworks (Flask and OpenCV)
+The integration of the ResNet-18 model into a functional web application is achieved through Flask and OpenCV. Flask acts as the micro-framework managing API routing and UUID-based session persistence (Grinberg, 2018). OpenCV serves as the preprocessing engine, handling the Internal Cascade Classifier for face localization and frame normalization (Bradski, 2000). This combination ensures high-performance data handling and minimizes backend latency, facilitating a synchronized, real-time user experience.
+
+2.2 Objectives
+1. Implement a real-time face detection and "zoom-in" cropping algorithm.
+2. Deploy a ResNet18 model for accurate classification based on Ekman's theory.
+3. Develop a privacy-focused history system using unique session identifiers (UUID) to isolate user data.
+
+-------------------------------------------------------------------------------
+3. LITERATURE REVIEW
+-------------------------------------------------------------------------------
+3.1 Introduction
+This chapter presents the methodology and systematic procedures adopted for the development of the Real-time Emotion Detection and Quote Generator System. It outlines the research design, the Level 1 Data Flow Diagram, and the detailed specifications of the proposed system. Furthermore, it describes the architectural design and the technical requirements necessary to transform the ResNet-18 model into a functional web-based application utilizing Flask and OpenCV.
+
+3.1 Ekman Classification
+3.2 Research Design
+The Iterative Enhancement Model was adopted for this research, allowing for continuous refinement of the AI model and system architecture. The development followed four phases:
+1. Requirement Gathering: Identification of the "Balanced FER-2013" dataset and tool selection (PyTorch/Flask).
+2. Model Training: Optimization of ResNet-18 through augmentation to solve class imbalance.
+3. System Integration: Connecting the trained model to the Flask backend and the OpenCV webcam pipeline.
+4. Testing and Evaluation: Measuring backend latency (273ms) and classification accuracy (79.81%).
+
+3.3 Ekman Classification
+Paul Ekman (1992) identified that certain facial expressions are universal across human cultures. This project adopts this framework to ensure the model's outputs are grounded in established psychological theory.
+
+3.2 Residual Networks (ResNet)
+3.4 Residual Networks (ResNet)
+Deep learning models often suffer from vanishing gradients. ResNet18 utilizes "skip connections" to allow gradients to flow through deep layers, significantly improving the accuracy of facial feature extraction (He et al., 2016).
+
+3.5 Requirement Specifications
+To ensure successful deployment, specific hardware and software criteria are met. This ensures real-time processing without significant latency.
+
+3.5.1 Hardware Requirements
+- Operating System: Windows 10/11 (64-bit).
+- Memory (RAM): 16 GB (High-performance overhead for inference).
+- Processor: Intel Core i7 or equivalent (Recommended for CV tasks).
+- Input Device: 720p Webcam (For facial landmark precision).
+- Storage: 256 GB SSD (For dataset and model weight management).
+
+3.5.2 Software Requirements
+- Languages: Python 3.11.7, HTML5, CSS3, JavaScript.
+- Libraries: PyTorch (AI), OpenCV (Vision), Flask (Backend), NumPy (Math), SQLite3 (Database).
+- Tools: VS Code (IDE), Google Colab (GPU Training).
+
+3.6 System Design
+This section describes the structural design, showing how data flows from the physical world into the digital model and back to the user.
+
+3.6.1 System Architecture
+The system is designed as a modular framework, separating user interaction from computational tasks. The architecture consists of two layers:
+
+1. Input Module: Real-time video acquisition and face localization using the Internal Cascade Classifier.
+2. Processing Module: Image cropping, 224x224 resizing, and normalization via PyTorch Transforms.
+3. Classification Module: ResNet-18 analysis of facial features.
+4. Quote Mapping Module: Selection of affirmations from the Quote Database.
+5. Result Module: Display of emotion and quote to the user.
+6. Support Module: Interactive manual affirmation selection.
+
+The "User Interface Layer" (Frontend) manages modules 1, 5, and 6, while the "Processing Layer" (Backend) manages modules 2, 3, and 4, ensuring high-speed inference and data security.
+
+3.6.2 Operational Flow
+The system’s operational logic is governed by a continuous feedback loop:
+1. Initialization: The webcam is activated, and ResNet-18 weights are loaded into the backend.
+2. Detection: The Internal Cascade Classifier polls for a face; if none is found, the system continues to scan.
+3. Preprocessing: Upon detection, the facial region is cropped with a 20% margin and resized to 224x224 pixels.
+4. Inference: The processed image is passed to the CNN to identify the dominant emotion.
+5. Affirmation Trigger: The system maps the detected emotion to a supportive quote from the Quote Database.
+6. Output: The emotion and quote are displayed via the web interface, and the session remains active for the next capture cycle.
+
+3.7 Algorithm Design
+The primary algorithm for the emotion detection and response cycle is outlined below:
+
+Algorithm: Real-time Emotion-Based Support
+Step 1: Start.
+Step 2: Initialize Webcam and load the pre-trained ResNet-18 model weights.
+Step 3: Capture the current frame from the video stream.
+Step 4: Detect if a human face is present using the Internal Cascade Classifier. If No, return to Step 3. If Yes, proceed to Step 5.
+Step 5: Preprocess the facial image (Crop ROI, Resize to 224x224, and Normalize).
+Step 6: Predict emotion using ResNet-18 (Input -> Residual Blocks -> Global Average Pooling -> Softmax).
+Step 7: Retrieve a randomized quote corresponding to the predicted emotion from the internal bank.
+Step 8: Display the emotion label and the empathetic quote on the user interface and log to the database.
+Step 9: Repeat from Step 3 until the user terminates the program.
+Step 10: End.
+
+3.8 Data Flow Diagram (DFD)
+This section illustrates the movement of data between the user, the processing engine, and the data storage.
+
+-------------------------------------------------------------------------------
+4. METHODOLOGY AND SYSTEM DESIGN
+-------------------------------------------------------------------------------
+4.1 Preprocessing and Optimized Detection
+To improve classification accuracy, a 20% margin crop is added to the coordinates detected by the Internal Cascade Classifier. This ensures the ResNet18 model receives sufficient context (jawline and forehead) for feature extraction. The image is processed in the RGB color space and resized to 224x224 pixels. A 5-second stabilization countdown is used to minimize motion blur during capture.
+
+4.2 Technical Stack
+- Frontend: HTML5, CSS3, JavaScript (WebRTC API)
+- Backend: Python, Flask, SQLite
+- Machine Learning: PyTorch (ResNet18)
+- Database: SQLite3
+- User Support: Interactive Manual Emotion Selection (Support Modal)
+
+4.3 Session Management and Data Privacy
+To ensure a seamless and privacy-focused user experience, the system implements an anonymous session management strategy:
+1. Unique Identifiers (UUID): Upon initialization, the Flask backend generates a version 4 UUID. This acts as a primary key to isolate data without requiring personal identifiable information (PII).
+2. HTTP-Only Cookies: The generated ID is stored in the user's browser via a secure, HTTP-only cookie. This ensures the "History" tab remains persistent across browser refreshes for up to one year.
+3. Database Mapping: The SQLite3 database uses a relational schema where the 'history' table is linked to the 'users' table via a foreign key. This architecture prevents data leakage between different users accessing the application.
+
+Table 1: Database Schema
+| Table   | Field      | Type    | Purpose                               |
+|---------|------------|---------|---------------------------------------|
+| users   | id         | TEXT    | Stores the unique browser UUID        |
+| history | user_id    | TEXT    | Links the scan to a specific session  |
+| history | emotion    | TEXT    | Stores the detected emotional state   |
+| history | quote      | TEXT    | Stores the affirmation provided       |
+
+-------------------------------------------------------------------------------
+4.10 Summary
+This chapter detailed the technical implementation, architectural integration, and empirical evaluation of the EmotionSense system. The performance metrics, specifically the 79.81% accuracy and sub-300ms backend latency, validate the effectiveness of the ResNet-18 model and the Flask/OpenCV pipeline in delivering synchronized, empathetic feedback.
+
+-------------------------------------------------------------------------------
+5. SUMMARY, CONCLUSION AND RECOMMENDATIONS
+-------------------------------------------------------------------------------
+5.1 Summary of Findings
+This research successfully designed and implemented a real-time emotion detection and empathetic support system. By bridging the gap between automated affective perception and human-centric feedback, the project demonstrated a robust method for proactive digital support.
+Key achievements include:
+1. Utilization of the Balanced FER-2013 dataset (62,923 samples) to ensure high generalization across seven universal emotions.
+2. Integration of a 5-second stabilization loop and 800ms "Heartbeat" alignment checks to optimize input quality.
+3. Development of an automated Lead-Line generator and Quote Bank to provide contextually relevant affirmations.
+4. Implementation of an Interactive Support Module, ensuring user agency and fallback options in cases of AI misclassification.
+5. Achievement of a 79.81% classification accuracy, demonstrating the reliability of the system for real-world deployment.
+
+5.2 Conclusion
+The study successfully met its objectives by developing a functional, real-time emotion recognition system grounded in Ekman’s universal framework. The transition from purely analytical classification to empathetic engagement marks a significant contribution to human-computer interaction (HCI). The ResNet-18 architecture proved superior to baseline models by leveraging residual learning to extract complex facial features, while the modular Flask/PyTorch stack ensured a responsive, privacy-focused user experience. Ultimately, the results confirm that artificial intelligence can be effectively harnessed to provide immediate psychological validation in interactive environments.
+
+5.3 Recommendations
+Based on the research findings, the following technical recommendations are proposed:
+1. Dataset Diversification: Incorporate more diverse datasets (e.g., RAF-DB or AffectNet) to improve model fairness across different age groups and ethnicities.
+2. Adaptive Image Enhancement: Integrate Contrast Limited Adaptive Histogram Equalization (CLAHE) to improve feature extraction in low-light or unevenly lit environments.
+3. Multi-Sensory Fusion: Expand the architecture to include audio-vocal analysis and text-sentiment processing for a holistic multimodal emotional profile.
+4. Edge Deployment: Explore model quantization and pruning to allow for local, client-side inference on mobile devices, reducing dependence on server-side processing.
+
+5.4 Suggestions for Future Work
+Future research should investigate the longitudinal impact of automated affirmations on user well-being through clinical user studies. Furthermore, the integration of Large Language Models (LLMs) could enable the system to move from static quote banks to dynamically generated, hyper-personalized empathetic conversations tailored to the user's specific context.
+
+5.5 Final Remark
+The EmotionSense system demonstrates the practical potential of Affective Computing in the mental health domain. While certain morphological limitations exist in facial feature overlap, the system provides a robust foundation for the next generation of emotionally aware intelligent agents.
+
+-------------------------------------------------------------------------------
+7. REFERENCES
+-------------------------------------------------------------------------------
+[1] Ekman, P. (1992). "Are there basic emotions?". Psychological Review.
+[2] He, K., et al. (2016). "Deep Residual Learning for Image Recognition". CVPR.
+[3] Picard, R. W. (1997). "Affective Computing". MIT Press.
+[4] Li, S., & Deng, W. (2020). "Deep Facial Expression Recognition: A Survey". IEEE.
+```
+
+### How to Apply These Changes
+1.  **Open `main.py`**: Find the end of the `get_quotes` function (around line 282). Paste the new history routes and the `init_db()` call exactly as shown in the diff.
+2.  **Create the Report**: Copy the contents of the `Project_Report.txt` diff and save it as a new file in your project folder.
+3.  **Run the App**: Restart your server. The first time you load the page, `emotionsense.db` will be created automatically in your folder.
+
+<!--
+[PROMPT_SUGGESTION]Can you help me generate a visual diagram for the system architecture to include in the report?[/PROMPT_SUGGESTION]
+[PROMPT_SUGGESTION]How can I create a Python script to visualize the confusion matrix from my metrics file as a heatmap?[/PROMPT_SUGGESTION]
