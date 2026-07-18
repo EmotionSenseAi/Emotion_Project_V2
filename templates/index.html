@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EmotionSense | Empathetic Emotion Support</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    /* Styling to make "Dear user" stand out */
+    .quote-salutation {
+      display: block;
+      font-weight: 800;
+      color: var(--accent, #b85c38);
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    /* Static, large guide box - centered and bigger */
+    .face-box {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 55% !important;
+      height: 85% !important;
+      border: 6px dashed #22c55e !important;
+      border-radius: 12px !important; /* Rectangular box shape */
+      z-index: 10;
+    }
+    .face-box.aligned {
+      border-style: solid !important;
+      border-color: #22c55e !important;
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <main class="app-shell">
+    <header class="hero">
+      <div class="app-logo">
+        <span class="logo-mark" aria-hidden="true">😊</span>
+        <span class="logo-text">EmotionSense</span>
+        <button id="refreshBtn" class="refresh-btn" title="Refresh Page">🔄</button>
+      </div>
+      <div class="hero-title-card">
+        <h1>EmotionSense Studio</h1>
+        <p class="sub">Real-time emotion detection with personalized supportive feedback.</p>
+      </div>
+      <p class="hero-description">Discover your emotions instantly through facial analysis and receive empathetic, tailored messages to support your well-being.</p>
+    </header>
+    <div class="layout">
+      <nav class="top-nav" aria-label="Main navigation">
+        <button class="nav-btn active" data-view="home">Home</button>
+        <button class="nav-btn" data-view="scan">Scan</button>
+        <button class="nav-btn" data-view="result">Result</button>
+        <button class="nav-btn" data-view="history">History <span id="historyBadge" class="badge" hidden>0</span></button>
+        <button class="nav-btn" data-view="feedback">Feedback</button>
+        
+        <div class="sidebar-insights-box context-panel active" data-context="home">
+          <div class="emotion-awareness-note">
+            <div class="clipboard-header">
+              <span class="clipboard-clip">📎</span>
+              <h3>Why Emotion Awareness Matters</h3>
+            </div>
+            <p>Knowing your emotions and maintaining emotional intelligence helps you understand yourself better, build stronger relationships, make informed decisions, and navigate life's challenges with greater resilience and empathy.</p>
+          </div>
+          
+          <div class="insights-divider"></div>
+          
+          <div class="wellness-tips-note">
+            <div class="tips-header">
+              <span class="tips-icon">💡</span>
+              <h3>Daily Wellness Tips</h3>
+            </div>
+            <ul class="tips-list">
+              <li>Take deep breaths when feeling overwhelmed</li>
+              <li>Practice mindfulness for 5 minutes daily</li>
+              <li>Journal your emotions to understand patterns</li>
+              <li>Connect with loved ones regularly</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sidebar-insights-box context-panel" data-context="scan">
+          <div class="emotion-awareness-note">
+            <div class="clipboard-header">
+              <span class="clipboard-clip">📸</span>
+              <h3>Scan Tips</h3>
+            </div>
+            <p>For better detection, face the camera directly, use good lighting, and hold still while analysis runs.</p>
+          </div>
+          <div class="insights-divider"></div>
+          <div class="wellness-tips-note">
+            <div class="tips-header">
+              <span class="tips-icon">✅</span>
+              <h3>Before You Start</h3>
+            </div>
+            <ul class="tips-list">
+              <li>Remove obstructions from your face</li>
+              <li>Keep your device stable</li>
+              <li>Position face closer to the camera for accurate detection</li>
+              <li>Wait for processing to complete</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sidebar-insights-box context-panel" data-context="result">
+          <div class="emotion-awareness-note">
+            <div class="clipboard-header">
+              <span class="clipboard-clip">📊</span>
+              <h3>Understanding Results</h3>
+            </div>
+            <p>Your top prediction is the most likely emotion at capture time. Confidence is an estimate, not a final judgment.</p>
+          </div>
+          <div class="insights-divider"></div>
+          <div class="wellness-tips-note">
+            <div class="tips-header">
+              <span class="tips-icon">🧠</span>
+              <h3>Use Results Well</h3>
+            </div>
+            <ul class="tips-list">
+              <li>Compare with how you truly feel</li>
+              <li>Use support text as guidance</li>
+              <li>Scan again if your expression changes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sidebar-insights-box context-panel" data-context="history">
+          <div class="emotion-awareness-note">
+            <div class="clipboard-header">
+              <span class="clipboard-clip">🕒</span>
+              <h3>History Insights</h3>
+            </div>
+            <p>Your recent scans help you notice emotional patterns over time and reflect on what influences your mood.</p>
+          </div>
+        </div>
+
+        <div class="sidebar-insights-box context-panel" data-context="feedback">
+          <div class="emotion-awareness-note">
+            <div class="clipboard-header">
+              <span class="clipboard-clip">💬</span>
+              <h3>Feedback Matters</h3>
+            </div>
+            <p>Your feedback improves clarity, support quality, and the overall experience.</p>
+          </div>
+          <div class="insights-divider"></div>
+          <div class="wellness-tips-note">
+            <div class="tips-header">
+              <span class="tips-icon">📝</span>
+              <h3>Helpful Feedback</h3>
+            </div>
+            <ul class="tips-list">
+              <li>Share what felt useful</li>
+              <li>Mention unclear parts</li>
+              <li>Suggest features you want next</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="view-stack">
+        <section id="homeView" class="view active">
+          <div class="combined-features-box">
+            <article class="feature-section">
+              <h2>✨ How It Works</h2>
+              <ol class="flow-list">
+                <li><strong>📸 Scan:</strong> Open the Scan page and click <strong>Start Camera</strong> to begin.</li>
+                <li><strong>🤖 Process:</strong> Your face is captured and analyzed using advanced AI.</li>
+                <li><strong>💝 Receive:</strong> Get your emotion result with a personalized supportive message.</li>
+              </ol>
+              <p class="feature-highlight">🎯 <strong>Unique Feature:</strong> Not satisfied with the result? Our support chat lets you select how you truly feel and receive empathetic responses.</p>
+            </article>
+
+            <div class="features-section-divider"></div>
+
+            <article class="feature-section">
+              <h2>ℹ️ Important Details</h2>
+              <ul class="key-list">
+                <li><strong>🔒 Privacy:</strong> All processing happens locally in your browser.</li>
+                <li><strong>💾 History:</strong> Your recent scans are saved locally for easy access.</li>
+                <li><strong>🔄 Fresh Results:</strong> Use <strong>Scan Again</strong> anytime for new insights.</li>
+                <li><strong>🌟 Support:</strong> Our app includes a built-in support feature for additional emotional guidance.</li>
+              </ul>
+            </article>
+          </div>
+
+          <article class="panel testimonial-panel">
+            <h2>🌟 What Users Say</h2>
+            <blockquote class="testimonial">
+              <p>"This app helped me understand my emotions better and provided the support I needed during difficult times. The personalized messages feel genuine and caring."</p>
+              <cite>- Sarah, Daily User</cite>
+            </blockquote>
+            <div class="features-grid">
+              <div class="feature-item">
+                <span class="feature-icon">🎭</span>
+                <h4>7 Emotions Detected</h4>
+                <p>Advanced AI recognizes happiness, sadness, anger, fear, surprise, disgust, and neutral states.</p>
+              </div>
+              <div class="feature-item">
+                <span class="feature-icon">🔒</span>
+                <h4>Privacy First</h4>
+                <p>All processing happens locally - your images never leave your device.</p>
+              </div>
+              <div class="feature-item">
+                <span class="feature-icon">💝</span>
+                <h4>Empathetic Support</h4>
+                <p>Get personalized, caring messages tailored to your emotional state.</p>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="scanView" class="view">
+          <section class="camera-only">
+            <article class="panel">
+              <div class="panel-head">
+                <h2>Live Camera</h2>
+                <div class="actions">
+                  <button id="startBtn" class="btn btn-primary">Start Camera</button>
+                  <button id="stopBtn" class="btn btn-ghost" disabled>Stop</button>
+                </div>
+              </div>
+              <div class="camera-wrap">
+                <video id="video" autoplay playsinline muted></video>
+                <div id="faceBox" class="face-box" aria-hidden="true" title="Align your face here"></div>
+                <canvas id="canvas" aria-hidden="true"></canvas>
+                <div id="statusBadge" class="status idle">Idle</div>
+              </div>
+            </article>
+          </section>
+        </section>
+
+        <section id="resultView" class="view">
+          <article class="panel result-panel">
+            <div class="panel-head">
+              <h2>Prediction</h2>
+              <button id="resultScanAgainBtn" class="btn btn-primary">Scan Again</button>
+            </div>
+            <div class="emotion-card">
+              <p class="label">Detected Emotion</p>
+              <p id="emotionText" class="emotion">Waiting...</p>
+              <p id="confidenceText" class="confidence">Confidence: --%</p>
+            </div>
+
+            <div class="quote-card">
+              <p class="label">Support Message</p>
+              <p id="quoteGreeting" class="quote-greeting">Hi dear user,</p>
+              <p id="quoteText" class="quote">Start a scan, your result will appear here automatically.</p>
+            </div>
+
+            <div>
+              <p class="label">Top Predictions</p>
+              <ul id="topList" class="top-list">
+                <li>--</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Support Chatbox Modal -->
+          <div id="supportModal" class="modal" role="dialog" aria-labelledby="supportTitle" aria-hidden="true">
+            <div class="modal-backdrop" aria-hidden="true"></div>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 id="supportTitle">Not satisfied with the detected result?</h3>
+                <button id="closeSupportModal" class="modal-close" aria-label="Close support chat">&times;</button>
+              </div>
+              <div class="modal-body">
+                <p class="support-intro">Select your current emotion if the detection does not reflect how you feel. Choose "Satisfied" if the result matches your feeling.</p>
+                <select id="emotionSelect" class="emotion-dropdown">
+                  <option value="">Select your current emotion</option>
+                  <option value="satisfied">Satisfied ✅</option>
+                  <option value="angry">Angry 😠</option>
+                  <option value="disgust">Disgust 🤢</option>
+                  <option value="fear">Fear 😨</option>
+                  <option value="happy">Happy 😊</option>
+                  <option value="neutral">Neutral 😐</option>
+                  <option value="sad">Sad 😢</option>
+                  <option value="surprise">Surprise 😲</option>
+                </select>
+                <div id="quoteContainer" class="quote-container" style="display: none;">
+                  <p class="quote-text" id="supportQuote"></p>
+                  <div class="quote-actions">
+                    <button id="thumbsUp" class="thumb-btn" aria-label="Like this quote">👍</button>
+                    <button id="thumbsDown" class="thumb-btn" aria-label="Dislike this quote">👎</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="historyView" class="view">
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Scan History</h2>
+              <button id="clearHistoryBtn" class="btn btn-ghost">Clear History</button>
+            </div>
+            <p class="subtle">Your latest scan results are stored locally on this device.</p>
+            <p id="historyNote" class="subtle history-note">Only the latest 20 scans are kept. Older entries are removed automatically when history grows too large.</p>
+            <div id="historyList" class="stack-list"></div>
+          </article>
+        </section>
+
+        <section id="feedbackView" class="view">
+          <article class="panel">
+            <div class="panel-head">
+              <h2>App Feedback</h2>
+              <button id="clearFeedbackBtn" class="btn btn-ghost">Clear Feedback</button>
+            </div>
+            <p class="subtle feedback-private-note">Your comments are private. Only the app's rating distribution is shown here.</p>
+            <div id="feedbackSummary" class="feedback-summary"></div>
+
+            <form id="feedbackForm" class="feedback-form">
+              <label>
+                Name (optional)
+                <input id="feedbackName" type="text" placeholder="Your name" />
+              </label>
+              <label>
+                Rating
+                <select id="feedbackRating" required>
+                  <option value="">Select rating</option>
+                  <option value="5">5 - Excellent</option>
+                  <option value="4">4 - Good</option>
+                  <option value="3">3 - Fair</option>
+                  <option value="2">2 - Needs work</option>
+                  <option value="1">1 - Poor</option>
+                </select>
+              </label>
+              <label>
+                Message
+                <textarea id="feedbackMessage" rows="4" placeholder="Your feedback..." required></textarea>
+              </label>
+              <button type="submit" class="btn btn-primary">Send Feedback</button>
+            </form>
+
+            <div id="feedbackList" class="stack-list"></div>
+          </article>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
