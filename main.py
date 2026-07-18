@@ -20,10 +20,10 @@ from flask import Flask, jsonify, render_template, request, make_response
 
 import gdown
 
-if not os.path.exists(MODEL_PATH) :
+if not os.path.exists(Path(__file__).resolve().parent / "new_trained_model.pth")MODEL_PATH):
     print("Downloading model from Google Drive...")
     url= "https://drive.google.com/uc?export=download&id=1DyCpytFnYqvurobyDhL4C6RnuQJRwlnU"
-    gdown.download(url, MODEL_PATH, quiet=False)
+    gdown.download(url, str(Path(__file__).resolve().parent / "new_trained_model.pth"), quiet=False)
     print("Download complete!")
                    
 
