@@ -2,6 +2,7 @@ from __future__  import annotations
 import base64
 import io
 import os
+import urllib.request
 import random
 import sqlite3
 import uuid
@@ -18,12 +19,11 @@ import torchvision.models as models
 from PIL import Image
 from flask import Flask, jsonify, render_template, request, make_response
 
-import gdown
-
 if not os.path.exists(Path(__file__).resolve().parent / "new_trained_model.pth"):
-    print("Downloading model from Google Drive...")
-    url= "https://docs.google.com/uc?export=download&confirm=t&id=1DyCpytFnYqvurobyDhL4C6RnuQJRwlnU"
-    gdown.download(url, str(Path(__file__).resolve().parent / "new_trained_model.pth"), quiet=False)
+    print("Downloading model from Github Release..")
+    url= "https://github.com/EmotionSenseAi/Emotion_Project_V2/releases/download/v1.0/new_trained_model.pth"
+
+    urllib.request.urlretrieve(url, str(Path(__file__).resolve().parent / "new_trained_model.pth"))
     print("Download complete!")
                    
 
