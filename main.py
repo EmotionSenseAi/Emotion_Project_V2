@@ -23,7 +23,7 @@ import gdown
 if not os.path.exists(Path(__file__).resolve().parent / "new_trained_model.pth"):
     print("Downloading model from Google Drive...")
     url= "https://docs.google.com/uc?export=download&confirm=t&id=1DyCpytFnYqvurobyDhL4C6RnuQJRwlnU"
-    gdown.download(url, str(Path(__file__).resolve().parent / "new_trained_model.pth"), quiet=False, fuzzy=True)
+    gdown.download(url, str(Path(__file__).resolve().parent / "new_trained_model.pth"), quiet=False)
     print("Download complete!")
                    
 
