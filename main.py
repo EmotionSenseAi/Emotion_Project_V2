@@ -18,6 +18,15 @@ import torchvision.models as models
 from PIL import Image
 from flask import Flask, jsonify, render_template, request, make_response
 
+import gdown
+
+if not os.path.exists(MODEL_PATH) :
+    print("Downloading model from Google Drive...")
+    url= "https://drive.google.com/uc?export=download&id=1DyCpytFnYqvurobyDhL4C6RnuQJRwlnU"
+    gdown.download(url, MODEL_PATH, quiet=False)
+    print("Download complete!")
+                   
+
 from torchvision import transforms
 
 BASE_DIR = Path(__file__).resolve().parent
