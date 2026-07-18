@@ -98,8 +98,8 @@ tensorflow-cpu
 termcolor==3.3.0
 threadpoolctl==3.6.0
 toml==0.10.2
-torch==2.11.0+cpu
-torchvision==0.26.0+cpu
+torch
+torchvision
 tornado==6.5.4
 typing-inspection==0.4.2
 typing_extensions==4.15.0
