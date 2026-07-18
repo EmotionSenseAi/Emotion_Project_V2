@@ -42,8 +42,8 @@ QUOTE_BANK: Dict[str, List[str]] = {
         "You are safe to take this one step at a time.",
         "Feeling scared does not mean you are weak. You are still brave.",
         "Small steady steps are enough. You do not need to rush.",
-        "Your body is asking for care, and you are listening well.",g
-       "Even with fear present, you are still moving forward.",
+        "Your body is asking for care, and you are listening well.",
+        "Even with fear present, you are still moving forward.",
         "It's okay to feel this way.Just take a deep breath and let it pass. You are stronger than you think.",
     ],
     "happy": [
