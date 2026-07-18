@@ -94,7 +94,7 @@ sympy==1.14.0
 tenacity==9.1.4
 tensorboard==2.20.0
 tensorboard-data-server==0.7.2
-tensorflow-cpu
+https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow_cpu2.14.0-cp311-manylinux_2_17x86_64.manylinux2014_x86_64.whl
 termcolor==3.3.0
 threadpoolctl==3.6.0
 toml==0.10.2
